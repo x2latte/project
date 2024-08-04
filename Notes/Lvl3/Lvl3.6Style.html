@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список заметок</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        #noteList {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+        #noteList li {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Список заметок</h1>
+    <ul id="noteList">
+        <!-- Здесь будут отображаться заметки -->
+    </ul>
+
+    <script>
+        // Добавление данных в localStorage, если их нет
+        if (!localStorage.getItem('notes')) {
+            localStorage.setItem('notes', JSON.stringify([
+                'Медоносная пчела - единственное насекомое, производящее пищу, которую потребляет человек.',
+                'В среднем, человек засыпает за 7 минут.',
+                'Кошки могут издавать более 100 различных звуков, а собаки - около 10.',
+                'Углы Пизанской башни остаются неизменными уже более 800 лет.',
+                'Гренландия - крупнейший остров в мире.',
+                'В Японии продаются квадратные арбузы, выращенные в специальных формах.',
+                'Антарктида - единственный континент, на котором нет рептилий и змей.',
+                'Колибри - единственная птица, которая может летать назад.',
+                'Крокодилы не умеют высовывать язык.',
+                'У осьминогов три сердца.',
+                'Единственный вид птиц, который не умеет летать - это страусы.',
+                'Слово "синяя борода" в русском языке обозначает сказочного персонажа, а в английском - синий кит.',
+                'Большой Барьерный риф - крупнейшая структура, созданная живыми организмами.',
+                'Люди - единственные существа, которые умеют рисовать прямые линии.',
+                'В организме человека достаточно серы, чтобы убить всех блох на средней собаке.',
+                'Самое глубокое место на Земле - Марианская впадина.',
+                'Слепая креветка может плавать только вперед.',
+                'Атомы в вашем теле на 99% пустые.',
+                'Кенгуру не умеют прыгать назад.',
+                'Летучие мыши всегда поворачивают налево, вылетая из пещеры.',
+                'В горах Анды растет самое высокогорное растение - яре́та.',
+                'Самое быстрое насекомое - драконфлай, его скорость может достигать 58 км/ч.',
+                'Дельфины спят с одним открытым глазом.',
+                'Слово "атом" происходит от греческого "неделимый".',
+                'Бабочки пробуют пищу своими ногами.'
+            ]));
+        }
+
+        // Функция для загрузки заметок из localStorage
+        function loadNotes() {
+            console.log('loadNotes вызвана');
+            const noteList = document.getElementById('noteList');
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+            notes.forEach(note => {
+                const li = document.createElement('li');
+                li.textContent = note;
+                noteList.appendChild(li);
+            });
+        }
+
+        // Функция для сохранения заметок в localStorage
+        function saveNotes() {
+            console.log('saveNotes вызвана');
+            const noteList = document.getElementById('noteList');
+            const notes = [];
+            noteList.querySelectorAll('li').forEach(li => {
+                notes.push(li.textContent);
+            });
+            localStorage.setItem('notes', JSON.stringify(notes));
+        }
+
+        // Загрузка заметок при загрузке страницы
+        window.addEventListener('load', loadNotes);
+
+        // Сохранение заметок перед закрытием страницы
+        window.addEventListener('beforeunload', saveNotes);
+    </script>
+
+</body>
+</html>
